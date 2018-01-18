@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WZTKCommon", "WZTKCommon.vcxproj", "{91731D22-736E-4757-AB94-AB96772EEDB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		DebugMD|x86 = DebugMD|x86
+		Release|x86 = Release|x86
+		ReleaseMD|x86 = ReleaseMD|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.Debug|x86.ActiveCfg = Debug|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.Debug|x86.Build.0 = Debug|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.DebugMD|x86.ActiveCfg = DebugMDD|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.DebugMD|x86.Build.0 = DebugMDD|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.Release|x86.ActiveCfg = Release|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.Release|x86.Build.0 = Release|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.ReleaseMD|x86.ActiveCfg = ReleaseMD|Win32
+		{91731D22-736E-4757-AB94-AB96772EEDB9}.ReleaseMD|x86.Build.0 = ReleaseMD|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

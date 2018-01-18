@@ -1,0 +1,222 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\basic">
+      <UniqueIdentifier>{8b858c7c-0703-420a-ba1b-82ffea6ef586}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\md5">
+      <UniqueIdentifier>{e2aa01da-74b1-4c51-9f3f-8fdb8c32818c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\log and dbgmsg">
+      <UniqueIdentifier>{7c90289a-eb55-4a93-973a-e23fad0a4bc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\zip and unzip">
+      <UniqueIdentifier>{c4049e36-5ba1-4337-908b-3d066bdb6660}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\util\XUnzip.h">
+      <Filter>头文件\zip and unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\XZip.h">
+      <Filter>头文件\zip and unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\ZipEasy.h">
+      <Filter>头文件\zip and unzip</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\MD5Checksum.h">
+      <Filter>头文件\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\MD5ChecksumDefines.h">
+      <Filter>头文件\md5</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\XTrack.h">
+      <Filter>头文件\log and dbgmsg</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\DebugMessage.h">
+      <Filter>头文件\log and dbgmsg</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Logger.h">
+      <Filter>头文件\log and dbgmsg</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\AutoLock.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\CommonWinFuns.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\crypt.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Date.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\DateTime.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\DateTimeSpan.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\DriverHelp.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\File.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\FileSignature.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\global.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Interface.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\List.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\msdirent.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\NonCopyable.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\OSVersion.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\Path.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\ProcessUtils.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\RegKeyCloseHelper.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\stdafx.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\StringConverter.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\StringEx.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\StringList.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\StringTools.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\targetver.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\TimeEx.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\WinErrors.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+    <ClInclude Include="include\util\WinRegs.h">
+      <Filter>头文件\basic</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Path.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StringList.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="String.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Date.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTime.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DateTimeSpan.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="msdirent.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="NonCopyable.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="OSVersion.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MD5Checksum.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="RegKeyCloseHelper.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="DriverHelp.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="WinErrors.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StringTools.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonWinFuns.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XUnzip.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XZip.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ZipEasy.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XTrack.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="crypt.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessUtils.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSignature.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StringConverter.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="QueryFileInfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
