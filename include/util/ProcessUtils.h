@@ -27,7 +27,9 @@
  * \{
  */
 
-/**
+namespace Process
+{
+	/**
  * \brief 判断指定PID的进程是否存在
  * \return 存在返回TRUE，否则返回FALSE
  */
@@ -49,10 +51,25 @@ DWORD GetProcessIdFromPath(const std::string& strFilePath);
 
 
 /**
+ * \brief 根据进程名获取进程ID
+ * \return 返回进程ID，如果没有找到返回0
+ */
+DWORD GetProcessIdByName(const std::string& strProcessName);
+
+
+/**
+ * \brief 杀死所有对应名字的进程
+ * \return 返回被杀死进程的个数
+ */
+DWORD KillProcess(const std::string& strProcessName);
+
+/**
  * \brief 将DOS设备路径（\\Device\\HarddiskVolume1\x86.sys）转换为逻辑路径（C:\x86.sys）
  * \return 如转换失败则返回空字符串。
  */
 std::string DosDevicePath2LogicalPath(const wchar_t* lpszDosPath);	
+
+};
 
 /**
  * /}
