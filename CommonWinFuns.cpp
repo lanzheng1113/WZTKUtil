@@ -418,7 +418,7 @@ std::wstring GetIEPath()
 }
 
 
-void RegistrySetValueDowrd( HKEY hKeyRoot,char* regPath,char* keyName,DWORD val,BOOL WriteTo64bitRegPath )
+BOOL RegistrySetValueDowrd( HKEY hKeyRoot, const char* regPath, const char* keyName,DWORD val, BOOL WriteTo64bitRegPath )
 {
 	HKEY hKey = 0;
 	DWORD keyMask = 0;
@@ -438,13 +438,18 @@ void RegistrySetValueDowrd( HKEY hKeyRoot,char* regPath,char* keyName,DWORD val,
 	}
 	if (bxx)
 	{
-		::RegSetValueExA(hKey, keyName, 0, REG_DWORD, (const BYTE*)&val, sizeof(DWORD));
+		LSTATUS rs = ::RegSetValueExA(hKey, keyName, 0, REG_DWORD, (const BYTE*)&val, sizeof(DWORD));
 		::RegCloseKey(hKey);
+		return rs == ERROR_SUCCESS;
+	}
+	else
+	{
+		return FALSE;
 	}
 }
 
 
-void RegistrySetValueString( HKEY hKeyRoot,char* regPath,char* keyName,char* val,BOOL WriteTo64bitRegPath )
+BOOL RegistrySetValueString( HKEY hKeyRoot,const char* regPath,const char* keyName, const char* val,BOOL WriteTo64bitRegPath,bool isExpandStrType)
 {
 	HKEY hKey = 0;
 	DWORD keyMask = 0;
@@ -462,12 +467,15 @@ void RegistrySetValueString( HKEY hKeyRoot,char* regPath,char* keyName,char* val
 	if (bxx)
 	{
 		//printf("key = %x,name=%s,value=%s",hKey,keyName,xurl);
-		::RegSetValueExA( hKey, keyName, 0, REG_SZ, (const BYTE*)val, strlen(val) );
+		DWORD dwType = isExpandStrType ? REG_EXPAND_SZ : REG_SZ;
+		LSTATUS rs = ::RegSetValueExA( hKey, keyName, 0, dwType, (const BYTE*)val, strlen(val) );
 		::RegCloseKey( hKey );
+		return ERROR_SUCCESS == rs;
 	}
 	else
 	{
 		printf( "failed!with error %d", GetLastError() );
+		return FALSE;
 	}
 }
 

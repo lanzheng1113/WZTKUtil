@@ -50,12 +50,6 @@ void Logger::Helper::operator()(const std::string& message) {
 	Logger::getInstance()->log(_component, _level, _className, message, _fileName, _line);
 }
 
-void Logger::Helper::operator()( const std::wstring& messagew )
-{
-	std::string message = String::fromStdWString(messagew);
-	Logger::getInstance()->log(_component, _level, _className, message, _fileName, _line);
-}
-
 void Logger::Helper::operator()(const char* format, ...) {
 	const int count = 1024;
 	//char buffer[count] = "test undefine log message.";
@@ -69,21 +63,6 @@ void Logger::Helper::operator()(const char* format, ...) {
 	Logger::getInstance()->log(_component, _level, _className, buffer, _fileName, _line);
 }
 
-void Logger::Helper::operator()( const wchar_t* formatw,... )
-{
-	const int count = 1024;
-	//wchar_t buffer[count] = L"test undefine log message w.";
-	wchar_t buffer[count] = L"";
-	va_list ap;
-	va_start(ap, formatw);
-	//_vsnwprintf(buffer, sizeof(buffer)-2, formatw, ap);
-	_vsnwprintf_s(buffer, sizeof(buffer) - 2, _TRUNCATE, formatw, ap);
-	va_end(ap);
-	buffer[count-1] = 0;
-	Logger::getInstance()->log(_component, _level, _className, std::wstring(buffer), _fileName, _line);
-}
-
-
 Logger* Logger::instance = NULL;
 Logger* Logger::getInstance() 
 {	
@@ -96,6 +75,7 @@ Logger* Logger::getInstance()
 
 Logger::Logger() {
 	_logFileState = LogFileState_Unset;
+	_printStdout = false;
 }
 
 Logger::~Logger() {
@@ -112,6 +92,11 @@ void Logger::setLogFileName(const std::string& name)
 		_logFileState = LogFileState_Defined;
 		_logFileName = name;
 	}
+}
+
+void Logger::setIsPrintStdOutput(bool PrintToStdOutput)
+{
+	_printStdout = PrintToStdOutput;
 }
 
 std::string Logger::getLogFileName() const {
@@ -181,12 +166,6 @@ Logger::Helper Logger::getHelper(const char* component, Logger::Level level, con
 	return Logger::Helper(component, level, className, fileName, line);
 }
 
-void Logger::log( const std::string & component, Level level, const std::string & className, const std::wstring & message, const char* filename /*= NULL*/, int line /*= 0*/ )
-{
-	std::string messagea = String::fromStdWString(message);
-	log(component,level,className,messagea,filename,line);
-}
-
 void Logger::log(const std::string & component, Level level, const std::string & className, const std::string & message, const char* filename, int line) {
 	boost::recursive_mutex::scoped_lock locker(mut_);
 	std::string levelString;
@@ -238,6 +217,11 @@ void Logger::log(const std::string & component, Level level, const std::string &
 
 	if (_logFileState == LogFileState_Created) {
 		_file << tmp << std::endl;
+		if (_printStdout)
+		{
+			//std::cout << tmp << std::endl; //这里用cout输出不了中文，设置locale也没有效果
+			printf("%s\n", tmp.c_str());
+		}
 	}
 //	std::cerr << tmp << std::endl;
 

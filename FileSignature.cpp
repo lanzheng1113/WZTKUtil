@@ -80,7 +80,7 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 			NULL);
 		if (!fResult)
 		{
-			_tprintf(_T("CryptQueryObject failed with %x\n"), GetLastError());
+			//_tprintf(_T("CryptQueryObject failed with %x\n"), GetLastError());
 			iRetCode = 1;
 			throw(0);
 		}
@@ -92,7 +92,7 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 			&dwSignerInfo);
 		if (!fResult)
 		{
-			_tprintf(_T("CryptMsgGetParam failed with %x\n"), GetLastError());
+			//_tprintf(_T("CryptMsgGetParam failed with %x\n"), GetLastError());
 			iRetCode = 2;
 			throw(0);
 		}
@@ -100,7 +100,7 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 		pSignerInfo = (PCMSG_SIGNER_INFO)LocalAlloc(LPTR, dwSignerInfo);
 		if (!pSignerInfo)
 		{
-			_tprintf(_T("Unable to allocate memory for Signer Info.\n"));
+			//_tprintf(_T("Unable to allocate memory for Signer Info.\n"));
 			iRetCode = 3;
 			throw(0);
 		}
@@ -112,7 +112,7 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 			&dwSignerInfo);
 		if (!fResult)
 		{
-			_tprintf(_T("CryptMsgGetParam failed with %x\n"), GetLastError());
+			//_tprintf(_T("CryptMsgGetParam failed with %x\n"), GetLastError());
 			iRetCode = 4;
 			throw(0);
 		}
@@ -123,21 +123,18 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 		{
 			if (ProgPubInfo.lpszProgramName != NULL)
 			{
-				wprintf(L"Program Name : %s\n",
-					ProgPubInfo.lpszProgramName);
+				//wprintf(L"Program Name : %s\n",ProgPubInfo.lpszProgramName);
 			}
 			if (ProgPubInfo.lpszPublisherLink != NULL)
 			{
-				wprintf(L"Publisher Link : %s\n",
-					ProgPubInfo.lpszPublisherLink);
+				//wprintf(L"Publisher Link : %s\n",ProgPubInfo.lpszPublisherLink);
 			}
 			if (ProgPubInfo.lpszMoreInfoLink != NULL)
 			{
-				wprintf(L"MoreInfo Link : %s\n",
-					ProgPubInfo.lpszMoreInfoLink);
+				//wprintf(L"MoreInfo Link : %s\n",ProgPubInfo.lpszMoreInfoLink);
 			}
 		}
-		_tprintf(_T("\n"));
+		//_tprintf(_T("\n"));
 		// Search for the signer certificate in the temporary
 		// certificate store.
 		CertInfo.Issuer = pSignerInfo->Issuer;
@@ -150,15 +147,14 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 			NULL);
 		if (!pCertContext)
 		{
-			_tprintf(_T("CertFindCertificateInStore failed with %x\n"),
-				GetLastError());
+			//_tprintf(_T("CertFindCertificateInStore failed with %x\n"),GetLastError());
 			iRetCode = 5;
 			throw(0);
 		}
 		// Print Signer certificate information.
-		_tprintf(_T("Signer Certificate:\n\n"));
+		//_tprintf(_T("Signer Certificate:\n\n"));
 		PrintCertificateInfo(pCertContext, SignerInfo);
-		_tprintf(_T("\n"));
+		//_tprintf(_T("\n"));
 
 		// Get the timestamp certificate signerinfo structure.
 		if (GetTimeStampSignerInfo(pSignerInfo, &pCounterSignerInfo))
@@ -175,29 +171,28 @@ int GetSignatureInfo(const std::wstring& path, OUT SignerCertificate &SignerInfo
 				NULL);
 			if (!pCertContext)
 			{
-				_tprintf(_T("CertFindCertificateInStore failed with %x\n"),
-					GetLastError());
+				//_tprintf(_T("CertFindCertificateInStore failed with %x\n"),GetLastError());
 				iRetCode = 6;
 				throw(0);
 			}
 #if 0
 			// Print timestamp certificate information.
 			SYSTEMTIME st;
-			_tprintf(_T("TimeStamp Certificate:\n\n"));
+			//_tprintf(_T("TimeStamp Certificate:\n\n"));
 			SignerCertificate SignerInfo2;
 			PrintCertificateInfo(pCertContext, SignerInfo2);
-			_tprintf(_T("\n"));
+			//_tprintf(_T("\n"));
 			// Find Date of timestamp.
 			if (GetDateOfTimeStamp(pCounterSignerInfo, &st))
 			{
-				_tprintf(_T("Date of TimeStamp : %02d/%02d/%04d %02d:%02d\n"),
+				/*_tprintf(_T("Date of TimeStamp : %02d/%02d/%04d %02d:%02d\n"),
 					st.wMonth,
 					st.wDay,
 					st.wYear,
 					st.wHour,
-					st.wMinute);
+					st.wMinute);*/
 			}
-			_tprintf(_T("\n"));
+			//_tprintf(_T("\n"));
 #endif
 		}
 	}
@@ -232,14 +227,14 @@ BOOL PrintCertificateInfo(PCCERT_CONTEXT pCertContext, SignerCertificate &Signer
 	__try
 	{
 		// Print Serial Number.
-		_tprintf(_T("Serial Number: "));
+		//_tprintf(_T("Serial Number: "));
 		dwData = pCertContext->pCertInfo->SerialNumber.cbData;
 		for (DWORD n = 0; n < dwData; n++)
 		{
-			_tprintf(_T("%02x "),
-				pCertContext->pCertInfo->SerialNumber.pbData[dwData - (n + 1)]);
+			/*_tprintf(_T("%02x "),
+				pCertContext->pCertInfo->SerialNumber.pbData[dwData - (n + 1)]);*/
 		}
-		_tprintf(_T("\n"));
+		//_tprintf(_T("\n"));
 		// Get Issuer name size.
 		if (!(dwData = CertGetNameString(pCertContext,
 			CERT_NAME_SIMPLE_DISPLAY_TYPE,
@@ -248,14 +243,14 @@ BOOL PrintCertificateInfo(PCCERT_CONTEXT pCertContext, SignerCertificate &Signer
 			NULL,
 			0)))
 		{
-			_tprintf(_T("CertGetNameString failed.\n"));
+			//_tprintf(_T("CertGetNameString failed.\n"));
 			__leave;
 		}
 		// Allocate memory for Issuer name.
 		szName = (LPWSTR)LocalAlloc(LPTR, dwData * sizeof(WCHAR));
 		if (!szName)
 		{
-			_tprintf(_T("Unable to allocate memory for issuer name.\n"));
+			//_tprintf(_T("Unable to allocate memory for issuer name.\n"));
 			__leave;
 		}
 		// Get Issuer name.
@@ -266,11 +261,11 @@ BOOL PrintCertificateInfo(PCCERT_CONTEXT pCertContext, SignerCertificate &Signer
 			szName,
 			dwData)))
 		{
-			_tprintf(_T("CertGetNameString failed.\n"));
+			//_tprintf(_T("CertGetNameString failed.\n"));
 			__leave;
 		}
 		// print Issuer name.
-		wprintf(L"Issuer Name: %s\n", szName);
+		//wprintf(L"Issuer Name: %s\n", szName);
 		SignerInfo.IssuerName = szName;
 		LocalFree(szName);
 		szName = NULL;
@@ -282,14 +277,14 @@ BOOL PrintCertificateInfo(PCCERT_CONTEXT pCertContext, SignerCertificate &Signer
 			NULL,
 			0)))
 		{
-			_tprintf(_T("CertGetNameString failed.\n"));
+			//_tprintf(_T("CertGetNameString failed.\n"));
 			__leave;
 		}
 		// Allocate memory for subject name.
 		szName = (LPWSTR)LocalAlloc(LPTR, dwData * sizeof(WCHAR));
 		if (!szName)
 		{
-			_tprintf(_T("Unable to allocate memory for subject name.\n"));
+			//_tprintf(_T("Unable to allocate memory for subject name.\n"));
 			__leave;
 		}
 		// Get subject name.
@@ -300,11 +295,11 @@ BOOL PrintCertificateInfo(PCCERT_CONTEXT pCertContext, SignerCertificate &Signer
 			szName,
 			dwData)))
 		{
-			_tprintf(_T("CertGetNameString failed.\n"));
+			//_tprintf(_T("CertGetNameString failed.\n"));
 			__leave;
 		}
 		// Print Subject Name.
-		wprintf(L"Subject Name: %s\n", szName);
+		//wprintf(L"Subject Name: %s\n", szName);
 		SignerInfo.SubjectName = szName;
 		fReturn = TRUE;
 	}

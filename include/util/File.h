@@ -84,6 +84,13 @@ public:
 	bool remove();
 
 	/**
+	 * \brief 删除文件夹下的所有内容，但不删除自己这个目录。
+	 * 
+	 * \return true if the operation succeeds otherwise false.
+	 */
+	void removeDirContentsButThis();
+
+	/**
 	 * Copies a file or a directory recursively.
 	 *
 	 * @param dstPath destination path. Will be created if does not exist
@@ -179,9 +186,13 @@ public:
 	static std::string getPathSeparator();
 
 	/**
-	 * Creates directories recursively if the path does not exist.
-	 *
-	 * If path exists, nothing happends.
+	 * 递归创建目录，如果目录已经存在则不做任何事情。
+	 * 如果传入的参数是一个目录，结尾则一定要加反斜杠。
+	 * 如 File::createPath("C:\\User\\Admistrator\\SB\\SB2.txt")会尝试
+	 * - 创建C:
+	 * - 创建C:\\User
+	 * - 创建C:\\User\\Admistrator
+	 * - 创建C:\\User\\Admistrator\\SB
 	 *
 	 * @param path the path to create
 	 */

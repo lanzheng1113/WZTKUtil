@@ -41,9 +41,8 @@ using namespace std;
 	#define S_ISREG(x) ((x) & _S_IFREG)
 #endif
 
-#include <windows.h>
-
 #ifdef CC_MSVC
+	#include <windows.h>
 	#include <direct.h>
 #endif
 
@@ -94,21 +93,50 @@ std::string File::getExtension() const
 
 bool File::isDirectory(const std::string & filename)
 {
-	struct stat statinfo;
 	bool result = false;
 	std::string myFilename = filename;
-
+#ifdef CC_MSVC
+	DWORD dwAttributes = ::GetFileAttributes(myFilename.c_str());
+	if (dwAttributes & FILE_ATTRIBUTE_DIRECTORY)
+	{
+		result = true;
+	}
+#else
+	struct stat statinfo;
 	if (myFilename.substr(myFilename.size() - 1, 1) == getPathSeparator()) {
 		myFilename = myFilename.substr(0, myFilename.size() - 1);
 	}
-
 	if (stat(myFilename.c_str(), &statinfo) == 0) {
 		if (S_ISDIR(statinfo.st_mode)) {
 			result = true;
 		}
 	}
+#endif
 
 	return result;
+}
+
+void File::removeDirContentsButThis()
+{
+	if (isDirectory(_filename))
+	{
+		StringList dirList = getDirectoryList();
+		for (StringList::const_iterator it = dirList.begin();
+		it != dirList.end(); ++it)
+		{
+			File subDir(_filename + getPathSeparator() + (*it));
+			subDir.remove();
+		}
+
+		StringList fileList = getFileList();
+		for (StringList::const_iterator it = fileList.begin();
+		it != fileList.end(); ++it)
+		{
+			File subFile(_filename + getPathSeparator() + (*it));
+			subFile.remove();
+		}
+	}
+	return;
 }
 
 bool File::remove() 
@@ -136,7 +164,7 @@ bool File::remove()
 
 	if (isDirectory(_filename)) 
 	{
-		if (!::rmdir(_filename.c_str())) 
+		if (!::_rmdir(_filename.c_str())) 
 		{
 			result = true;
 		}
@@ -151,6 +179,7 @@ bool File::remove()
 
 	return result;
 }
+
 
 bool File::move(const std::string & newName, bool overwrite) 
 {
@@ -391,6 +420,7 @@ File::FileTimes File::getTimes() const
 {
 	FileTimes f = {0,0,0};
 	struct stat sb;
+	
 	if (stat(_filename.c_str(), &sb) == 0) {
 		f.last_access_time = sb.st_atime;
 		f.create_time = sb.st_ctime;
@@ -452,7 +482,7 @@ void File::createPath(const std::string & v_path)
 	string::size_type index = path.find(File::getPathSeparator(), 0);
 	while (index != string::npos) {
 #if defined CC_MSVC || defined CC_MINGW
-		mkdir(path.substr(0, index).c_str());
+		_mkdir(path.substr(0, index).c_str());
 #else
 		mkdir(path.substr(0, index).c_str(), S_IRUSR | S_IWUSR | S_IXUSR);
 #endif
@@ -463,7 +493,7 @@ void File::createPath(const std::string & v_path)
 
 #ifdef OS_WINDOWS
 File File::createTemporaryFile() {
-	return File(tempnam(NULL, NULL));
+	return File(_tempnam(NULL, NULL));
 }
 #else
 File File::createTemporaryFile() {
@@ -508,14 +538,25 @@ bool File::exists(const std::string & path) {
 	if (myPath.substr(myPath.size() - pathSeparator.size()) == pathSeparator) {
 		myPath = myPath.substr(0, myPath.size() - pathSeparator.size());
 	}
-
-	struct stat statinfo;
-
-	if (stat(myPath.c_str(), &statinfo) == 0) {
-		return true;
-	} else {
+#ifdef CC_MSVC
+	if (GetFileAttributesA(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+	{
 		return false;
 	}
+	else
+	{
+		return true;
+	}
+#else
+	struct stat statinfo;
+	if (stat(myPath.c_str(), &statinfo) == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
+#endif // CC_MSVC
+
 }
 
 

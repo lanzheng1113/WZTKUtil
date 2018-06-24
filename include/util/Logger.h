@@ -96,9 +96,7 @@ public:
 	public:
 		 Helper(const char* component, Level, const char* className, const char* fileName, int line);
 		 void operator()(const std::string& message);
-		 void operator()(const std::wstring& messagew);
 		 void operator()(const char* format, ...);
-		 void operator()(const wchar_t* formatw,...);
 	
 	private:
 		const char* _component;
@@ -122,6 +120,11 @@ public:
 	 * an empty string as an argument.
 	 */
 	 void setLogFileName(const std::string& logFileName);
+
+	 /**
+	  * \brief 设置是否同时将日志打印到标准输出。默认不打印
+	  */
+	 void setIsPrintStdOutput(bool PrintToStdOutput);
 
 	 std::string getLogFileName() const;
 
@@ -149,8 +152,6 @@ public:
 
 	 void log(const std::string & component, Level level, const std::string & className, const std::string & message,
 		const char* filename = NULL, int line = 0);
-	 void log(const std::string & component, Level level, const std::string & className, const std::wstring & message,
-		 const char* filename = NULL, int line = 0);
 private:
 
 	Logger();
@@ -168,6 +169,8 @@ private:
 	std::ofstream _file;
 
 	boost::recursive_mutex mut_;
+
+	bool _printStdout;
 
 	static Logger* instance;
 };

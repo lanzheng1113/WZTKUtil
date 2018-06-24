@@ -1,7 +1,17 @@
 #pragma once
 #include <string>
 #include <windows.h>
+#include <string>
+#include <map>
+#include <vector>
 
+using std::wstring;
+using std::map;
+using std::vector;
+
+#ifndef OUT
+#define OUT
+#endif
 /**
  * \addtogroup REG_FUN 
  * \{
@@ -37,7 +47,7 @@ DWORD TakeObjectsOwnerShip( HKEY hPrefKey, LPCSTR lpczSubKey );
  * \param WriteTo64bitRegPath 此路径是否为64位系统键值
  * \return None
  */
-void RegistrySetValueDowrd(HKEY hKeyRoot,char* regPath,char* keyName,DWORD val,BOOL WriteTo64bitRegPath);
+BOOL RegistrySetValueDowrd(HKEY hKeyRoot, const char* regPath, const char* keyName,DWORD val,BOOL WriteTo64bitRegPath);
 
 
 /**
@@ -49,8 +59,130 @@ void RegistrySetValueDowrd(HKEY hKeyRoot,char* regPath,char* keyName,DWORD val,B
  * \param WriteTo64bitRegPath 此路径是否为64位系统键值
  * \return None
  */
-void RegistrySetValueString(HKEY hKeyRoot,char* regPath,char* keyName,char* val,BOOL WriteTo64bitRegPath);
+BOOL RegistrySetValueString(HKEY hKeyRoot,const char* regPath, const char* keyName, const char* val,BOOL WriteTo64bitRegPath, bool isExpandStrType = false);
 
 /**
  * \}
  */
+
+class CWinRegKey
+{
+public:
+	CWinRegKey(HKEY keyRoot, const wchar_t* subKey, BOOL bIs64) 
+	{ 
+		m_rootKey = keyRoot;
+		m_subKey = subKey;
+		m_bIs64 = bIs64;
+	}
+	~CWinRegKey() { ; }
+public:
+	/**
+	 * \brief Set root key.
+	 * \param keyRoot The root key.
+	 */
+	void SetRootKey(HKEY keyRoot) { m_rootKey = keyRoot; }
+	/**
+	 * \brief Set sub-key.
+	 * \param subKey sub-key
+	 */
+	void SetSubKey(const wchar_t* subKey) { m_subKey = subKey; }
+	/**
+	 * \brief 设定是否为64位的注册表路径
+	 */
+	void SetIs64Entry(BOOL bIs64) { m_bIs64 = bIs64; }
+	/**
+	 * \brief Write an integer value to registry entry (with REG_DOWRD type).
+	 * \param key The registry key.
+	 * \param val The registry value.
+	 */
+	BOOL WriteInteger(const wchar_t* key, int val);
+
+	/**
+	 * \brief 读一个整形
+	 * 
+	 * \param
+	 * \return
+	 */
+	BOOL ReadInteger(const wchar_t* key, OUT int* val);
+	/**
+	 * \brief Write an string value to registry entry (with REG_STRING type)
+	 * \param key The registry key.
+	 * \param val The registry value.
+	 */
+	BOOL WriteString(const wchar_t* key, const wchar_t* val, bool isExpandStrType=false);
+
+	/**
+	 * \brief 读一个字符串。
+	 * 
+	 * \param
+	 * \return
+	 */
+	BOOL ReadString(const wchar_t* key, OUT wchar_t* val, int nSize);
+
+	/**
+	 * \brief 遍历当前子项下的所有值的键值对
+	 * 
+	 * \return 返回当前子项下的键值对
+	 */
+	std::map<std::wstring, std::wstring> EnumStringValues();
+
+	/**
+	 * \brief 遍历当前子项下的所有子项
+	 * 
+	 * \return 返回当前子项下的所有子项。
+	 */
+	std::vector<std::wstring> EnumSubKeys();
+
+	/**
+	 * \brief Create a sub-key under root key specified by "keyRoot" parameter.
+	 */
+	static BOOL CreateSubKey(HKEY keyRoot, const wchar_t* subKey);
+
+	// delete sub key.
+	BOOL DeleteSubKey();
+
+	// 删除指定名字的值
+	BOOL DeleteValue(const wchar_t* pszValueName);
+
+	/**
+	 * \brief Adjust a token's privilege.
+	 * 
+	 * \param hToken access token handle
+	 * \param nameOfPrivilege name of privilege to enable/disable
+	 * \param bEnablePrivilege to enable or disable privilege
+	 * \return 成功返回TRUE，否则返回FALSE。调用GetLastError获取错误码。
+	 */
+	static BOOL SetPrivilege(HANDLE hToken, LPCWSTR nameOfPrivilege, BOOL bEnablePrivilege);
+	/**
+	 * \brief Load registry from a file.
+	 * 
+	 * \param KeyRoot
+	 * \param lpSubKey
+	 * \param lpFilePath
+	 * \return
+	 */
+	static BOOL LoadKey(HKEY KeyRoot, LPCWSTR lpSubKey, LPCWSTR lpFilePath);
+
+	/**
+	 * \brief Unload Registry key.
+	 */
+	static BOOL UnLoadKey(HKEY KeyRoot, LPCWSTR lpSubKey);
+
+private:
+	BOOL DeleteSubKeyImp(HKEY hKey, LPWSTR subKey);
+
+	CWinRegKey();
+	CWinRegKey(const CWinRegKey&);
+	CWinRegKey& operator=(const CWinRegKey& rh) {
+		m_rootKey = rh.m_rootKey;
+		m_subKey = rh.m_subKey;
+		m_bIs64 = rh.m_bIs64;
+		return *this; 
+	}
+
+private:
+	HKEY m_rootKey;
+	std::wstring m_subKey;
+	BOOL m_bIs64;
+};
+
