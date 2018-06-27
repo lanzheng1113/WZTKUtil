@@ -577,7 +577,7 @@ FileReader::~FileReader() {
 }
 
 bool FileReader::open() {
-	LOG_DEBUG("loading " + _filename);
+	//LOG_DEBUG("loading " + _filename);
 	_file.open(_filename.c_str(), ios::binary);
 	return isOpen();
 }

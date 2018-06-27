@@ -167,7 +167,7 @@ Logger::Helper Logger::getHelper(const char* component, Logger::Level level, con
 }
 
 void Logger::log(const std::string & component, Level level, const std::string & className, const std::string & message, const char* filename, int line) {
-	boost::recursive_mutex::scoped_lock locker(mut_);
+	std::lock_guard<std::recursive_mutex> locker(mut_);
 	std::string levelString;
 
 // 	Level minLevel = minLevelForComponent(component);
@@ -231,7 +231,8 @@ void Logger::log(const std::string & component, Level level, const std::string &
 }
 
 
-void Logger::flush() {
-	boost::recursive_mutex::scoped_lock locker(mut_);
+void Logger::flush() 
+{
+	std::lock_guard<std::recursive_mutex> locker(mut_);
 	_file.flush();
 }

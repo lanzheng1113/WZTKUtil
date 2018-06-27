@@ -75,7 +75,7 @@ __PRETTY_FUNCTION__ : function name
  * @author Aurelien Gateau
  * \ingroup LOG_AND_DEBUG_MSG
  */
-#include <boost/thread/recursive_mutex.hpp>
+#include <mutex>
 class Logger : NonCopyable {
 public:
 	enum Level {
@@ -168,7 +168,7 @@ private:
 
 	std::ofstream _file;
 
-	boost::recursive_mutex mut_;
+	std::recursive_mutex mut_;
 
 	bool _printStdout;
 
